@@ -362,15 +362,16 @@ void CApplication::ProcessInput(float fElapsedTime)
 		
 		LONG Dx = m_input.GetXDiff();
 		LONG Dy = m_input.GetYDiff();
-		m_camera.Yaw(-Dx * 0.01f);
-		m_camera.Pitch(-Dy * 0.01f);
+		m_meshPerson.Yaw(-Dx * 0.01f);
+		m_meshPerson.Pitch(-Dy * 0.001f);
 	}
 	else
 	{
 		LONG Dx = m_input.GetXDiff();
 		LONG Dy = m_input.GetYDiff();
-		m_camera.Yaw(Dx * 0.01f);
-		m_camera.Pitch(Dy * 0.001f);
+		m_camera.YawY(Dx * 0.01f);
+
+		//m_camera.Pitch(Dy * 0.001f);
 	}
 
 	if(m_input.CheckKeyPressed(DIK_UP)) //up key

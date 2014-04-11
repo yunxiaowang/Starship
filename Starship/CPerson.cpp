@@ -21,7 +21,7 @@ void CPerson::Initialize(LPDIRECT3DDEVICE9 pDevice, WCHAR * meshFile, D3DXVECTOR
 	SetPosition(vecPos);
 
 	m_Mesh.SetXRotation(-D3DX_PI / 2);
-	//m_Mesh.SetYRotation(0);
+	m_Mesh.SetYRotation(D3DX_PI);
 	m_Mesh.SetXScale(0.2f);
 	m_Mesh.SetYScale(0.2f);
 	m_Mesh.SetZScale(0.2f);

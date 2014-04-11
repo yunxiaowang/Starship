@@ -164,3 +164,43 @@ D3DXVECTOR3 CControlObject::getLook(D3DXVECTOR3 * pvecLook)
 
 	return m_vecLook;
 }
+
+void CControlObject::PitchX(float fAngle)
+{
+
+}
+
+void CControlObject::YawY(float fAngle)
+{
+	//odPrintfA("fAngle:%f", fAngle);
+
+	D3DXMATRIX mat;
+
+	D3DXMatrixRotationY(&mat, fAngle);
+
+	m_transform = m_transform * mat;
+
+	//if(fAngle < 0.0f)
+	//{
+	//	m_transform = m_translate * mat;
+	//}
+
+	m_vecRight = D3DXVECTOR3(m_transform._11, m_transform._12, m_transform._13);
+	//odPrintfA("m_vecRight: %f %f %f", m_transform._11, m_transform._12,m_transform._13);
+	m_vecUp = D3DXVECTOR3(m_transform._21, m_transform._22, m_transform._23);
+	m_vecLook = D3DXVECTOR3(m_transform._31, m_transform._32, m_transform._33);
+	m_vecPos = D3DXVECTOR3(m_transform._41, m_transform._42, m_transform._43);
+
+	SetPosition(m_vecPos);
+
+	D3DXMatrixInverse(&mat, 0, &m_scale);
+	D3DXMATRIX matRotate = mat;
+	matRotate = matRotate * m_transform;
+	D3DXMatrixInverse(&mat, 0, &m_translate);
+	m_rotate = matRotate * mat;
+}
+
+void CControlObject::RollZ(float fAngle)
+{
+
+}

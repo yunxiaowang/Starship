@@ -21,6 +21,10 @@ public:
 	void Yaw(float fAngle);   // 绕up vector旋转
 	void Roll(float fAngle);  // 绕look vector旋转
 
+	void PitchX(float fAngle); // 绕x轴旋转
+	void YawY(float fAngle);   // 绕y轴旋转
+	void RollZ(float fAngle);  // 绕z轴旋转
+
 	D3DMATRIX getViewMatrix(D3DXMATRIX * pmatView = NULL);
 
 	//D3DXVECTOR3 getPosition(D3DXVECTOR3 * pvecPos = NULL);

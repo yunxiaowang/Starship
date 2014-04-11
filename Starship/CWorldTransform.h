@@ -44,7 +44,7 @@ public:
 
 	void SetParent(CWorldTransform * pParent);
 	
-protected:
+//protected:
 	D3DXMATRIX m_translate;
 	D3DXMATRIX m_rotate;
 	D3DXMATRIX m_scale;
