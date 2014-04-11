@@ -8,6 +8,8 @@ CWorldTransform::CWorldTransform()
 	D3DXMatrixIdentity( &m_scale );
 	D3DXMatrixIdentity( &m_transform );
 	m_rotationX = m_rotationY = m_rotationZ = 0.0f;
+
+	m_pParent = NULL;
 }
 
 CWorldTransform::~CWorldTransform()
@@ -62,6 +64,10 @@ void CWorldTransform::ScaleBy(float x, float y, float z)
 D3DXMATRIX CWorldTransform::GetTransform()
 {
 	m_transform = m_scale * m_rotate * m_translate; 
+	
+	if(m_pParent)
+		return m_transform * m_pParent->GetTransform();
+
 	return m_transform;
 }
 
@@ -153,4 +159,22 @@ void CWorldTransform::SetYScale( float y )
 void CWorldTransform::SetZScale( float z )    
 {
 	m_scale._33 = z; 
+}
+
+void CWorldTransform::SetPosition(D3DXVECTOR3 vecPos)
+{
+	m_translate._41 = vecPos.x; 
+	m_translate._42 = vecPos.y;
+	m_translate._43 = vecPos.z; 
+}
+
+
+void CWorldTransform::SetParent(CWorldTransform * pParent)
+{
+	m_pParent = pParent;
+}
+
+D3DXVECTOR3 CWorldTransform::GetPosition()
+{
+	return D3DXVECTOR3(m_translate._41, m_translate._42, m_translate._43);
 }

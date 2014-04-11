@@ -3,9 +3,9 @@
 
 #include "stdafx.h"
 #include "CMesh.h"
-#include "CWorldTransform.h"
+//#include "CWorldTransform.h"
 
-class CAirplane : public CWorldTransform
+class CAirplane
 {
 public:
 	CAirplane();
@@ -23,7 +23,7 @@ private:
 
 	//D3DXVECTOR3 m_vecLocal;
 
-	CWorldTransform * m_pParent;
+	//CWorldTransform * m_pParent;
 };
 
 #endif

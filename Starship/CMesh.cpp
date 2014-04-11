@@ -56,7 +56,7 @@ BOOL CMesh::Initialize(LPDIRECT3DDEVICE9 pDevice, WCHAR * meshFile)
 
 	pBuffer->Release();
 
-	SetYRotation(D3DX_PI);
+	//SetYRotation(D3DX_PI);
 
 	return TRUE;
 }

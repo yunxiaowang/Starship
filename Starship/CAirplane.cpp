@@ -21,21 +21,23 @@ void CAirplane::Initialize(LPDIRECT3DDEVICE9 pDevice, WCHAR * meshFile, D3DXVECT
 	m_Mesh.SetYPosition(vecLocal.y);
 	m_Mesh.SetZPosition(vecLocal.z);
 
-	SetYRotation(D3DX_PI);
+	m_Mesh.SetYRotation(D3DX_PI);
 
-	m_pParent = pParent;
+	m_Mesh.SetParent(pParent);
+
+	//m_pParent = pParent;
 }
 
 void CAirplane::Update()
 {
-	SetXPosition(m_Mesh.GetXPosition() + m_pParent->GetXPosition());
-	SetYPosition(m_Mesh.GetYPosition() + m_pParent->GetYPosition());
-	SetZPosition(m_Mesh.GetZPosition() + m_pParent->GetZPosition());
+	//SetXPosition(m_Mesh.GetXPosition() + m_pParent->GetXPosition());
+	//SetYPosition(m_Mesh.GetYPosition() + m_pParent->GetYPosition());
+	//SetZPosition(m_Mesh.GetZPosition() + m_pParent->GetZPosition());
 }
 
 void CAirplane::Render()
 {
-	D3DXMATRIX matWorldTrans = GetTransform();
+	D3DXMATRIX matWorldTrans = m_Mesh.GetTransform();
 	m_pDevice->SetTransform(D3DTS_WORLD, &matWorldTrans);
 
 	m_Mesh.Render();

@@ -28,6 +28,8 @@ public:
 	float GetYScale();
 	float GetZScale();
 
+	D3DXVECTOR3 GetPosition();
+
 	void SetXPosition(float x);
 	void SetYPosition(float y);
 	void SetZPosition(float z);
@@ -38,12 +40,18 @@ public:
 	void SetYScale(float y);
 	void SetZScale(float z);
 
+	void SetPosition(D3DXVECTOR3 vecPos);
+
+	void SetParent(CWorldTransform * pParent);
+	
 protected:
 	D3DXMATRIX m_translate;
 	D3DXMATRIX m_rotate;
 	D3DXMATRIX m_scale;
 	D3DXMATRIX m_transform;
 	float m_rotationX, m_rotationY, m_rotationZ;
+
+	CWorldTransform * m_pParent;
 };
 
 #endif

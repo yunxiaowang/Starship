@@ -85,6 +85,7 @@
     <ClInclude Include="CAirplane.h" />
     <ClInclude Include="CApplication.h" />
     <ClInclude Include="CCamera.h" />
+    <ClInclude Include="CControlObject.h" />
     <ClInclude Include="CInput.h" />
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CPlatform.h" />
@@ -103,6 +104,7 @@
     <ClCompile Include="CAirplane.cpp" />
     <ClCompile Include="CApplication.cpp" />
     <ClCompile Include="CCamera.cpp" />
+    <ClCompile Include="CControlObject.cpp" />
     <ClCompile Include="CInput.cpp" />
     <ClCompile Include="CMesh.cpp" />
     <ClCompile Include="CPlatform.cpp" />

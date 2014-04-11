@@ -4,14 +4,15 @@
 #include "stdafx.h"
 #include "CMesh.h"
 #include "CWorldTransform.h"
+#include "CControlObject.h"
 
-class CPerson : public CWorldTransform
+class CPerson : public CControlObject
 {
 public:
 	CPerson();
 	virtual ~CPerson();
 
-	void Initialize(LPDIRECT3DDEVICE9 pDevice, WCHAR * meshFile, D3DXVECTOR3 vecPos, D3DXMATRIX matLocal);
+	void Initialize(LPDIRECT3DDEVICE9 pDevice, WCHAR * meshFile, D3DXVECTOR3 vecPos/*, D3DXMATRIX matLocal*/);
 
 	void Update();
 	void Render();
@@ -19,7 +20,7 @@ public:
 private:
 	CMesh m_Mesh;
 
-	D3DXMATRIX m_matLocal;
+	//D3DXMATRIX m_matLocal;
 
 	LPDIRECT3DDEVICE9 m_pDevice;
 };

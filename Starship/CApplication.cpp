@@ -196,27 +196,27 @@ void CApplication::CreateDevice(LPDIRECT3DDEVICE9 pDevice)
 	//D3DXVECTOR3 vecUp(0.0f, 1.0f, 0.2f);
 	//D3DXVECTOR3 vecRight(1.0f, 0.0f, 0.0f);
 
-	D3DXVECTOR3 vecPos(0.0f, 5.0f, -80.0f);
-	D3DXVECTOR3 vecLook(0.0f, 0.0f, 1.0f);
-	D3DXVECTOR3 vecUp(0.0f, 1.0f, 0.0f);
-	D3DXVECTOR3 vecRight(1.0f, 0.0f, 0.0f);
+	//D3DXVECTOR3 vecPos(0.0f, 5.0f, -80.0f);
+	//D3DXVECTOR3 vecLook(0.0f, 0.0f, 1.0f);
+	//D3DXVECTOR3 vecUp(0.0f, 1.0f, 0.0f);
+	//D3DXVECTOR3 vecRight(1.0f, 0.0f, 0.0f);
 
-	m_camera = CCamera(vecPos,vecLook,vecUp,vecRight);
-	m_fCameraMoveSpeed = 25.0f;
+	//m_camera = CCamera(vecPos,vecLook,vecUp,vecRight);
+	//m_fCameraMoveSpeed = 25.0f;
 
-	m_skybox.Initialize(pDevice, 50000.0, 0.02f, vecPos);
-	WCHAR * pTexFile[] = {
-		L"media\\cloudy_noon_LF.jpg",
-		L"media\\cloudy_noon_FR.jpg",
-		L"media\\cloudy_noon_RT.jpg",
-		L"media\\cloudy_noon_BK.jpg",
-		L"media\\cloudy_noon_UP.jpg",
-		L"media\\cloudy_noon_DN.jpg"
-	};
-	m_skybox.LoadTexture(pTexFile, 6);
+	//m_skybox.Initialize(pDevice, 50000.0, 0.02f, vecPos);
+	//WCHAR * pTexFile[] = {
+	//	L"media\\cloudy_noon_LF.jpg",
+	//	L"media\\cloudy_noon_FR.jpg",
+	//	L"media\\cloudy_noon_RT.jpg",
+	//	L"media\\cloudy_noon_BK.jpg",
+	//	L"media\\cloudy_noon_UP.jpg",
+	//	L"media\\cloudy_noon_DN.jpg"
+	//};
+	//m_skybox.LoadTexture(pTexFile, 6);
 
 	D3DXVECTOR3 platPos1(0.0f, 2.0f, -70.0f);
-	D3DXVECTOR3 vecSize(5.0f, 1.0f, 5.0f);
+	D3DXVECTOR3 vecSize(1.0f, 1.0f, 1.0f);
 	D3DXVECTOR3 vecSpeed1(0.5f, 0.0f, 0.5f);
 
 	m_platform1.Initialize(pDevice,platPos1,vecSize,D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f),vecSpeed1);
@@ -229,13 +229,33 @@ void CApplication::CreateDevice(LPDIRECT3DDEVICE9 pDevice)
 	m_meshPlane.Initialize(pDevice, L"media\\airplane.x", vecPlaneLocal, dynamic_cast<CWorldTransform *>(&m_platform1));
 	//m_meshPlane.setParent(dynamic_cast<CWorldTransform *>(&m_platform1));
 	
-	CWorldTransform localTrans;
-	localTrans.SetXRotation(-D3DX_PI / 2);
-	localTrans.SetXScale(0.2f);
-	localTrans.SetYScale(0.2f);
-	localTrans.SetZScale(0.2f);
+	//CWorldTransform localTrans;
+	//localTrans.SetXRotation(-D3DX_PI / 2);
+	//localTrans.SetXScale(0.2f);
+	//localTrans.SetYScale(0.2f);
+	//localTrans.SetZScale(0.2f);
 	D3DXVECTOR3 vecPersonPos(-5.0f, 0.0f, -65.0f);
-	m_meshPerson.Initialize(pDevice, L"media\\SnowMan.X",vecPersonPos, localTrans.GetTransform());
+	m_meshPerson.Initialize(pDevice, L"media\\SnowMan.X",vecPersonPos/*, localTrans.GetTransform()*/);
+
+	D3DXVECTOR3 vecPos(0.0f, 5.0f, -10.0f);
+	D3DXVECTOR3 vecLook(0.0f, 0.0f, 1.0f);
+	D3DXVECTOR3 vecUp(0.0f, 1.0f, 0.0f);
+	D3DXVECTOR3 vecRight(1.0f, 0.0f, 0.0f);
+
+	m_camera = CCamera(vecPos,vecLook,vecUp,vecRight);
+	m_camera.SetParent(dynamic_cast<CWorldTransform *>(&m_meshPerson));
+	m_fCameraMoveSpeed = 25.0f;
+
+	m_skybox.Initialize(pDevice, 50000.0, 0.02f, vecPos);
+	WCHAR * pTexFile[] = {
+		L"media\\cloudy_noon_LF.jpg",
+		L"media\\cloudy_noon_FR.jpg",
+		L"media\\cloudy_noon_RT.jpg",
+		L"media\\cloudy_noon_BK.jpg",
+		L"media\\cloudy_noon_UP.jpg",
+		L"media\\cloudy_noon_DN.jpg"
+	};
+	m_skybox.LoadTexture(pTexFile, 6);
 
 	m_terrain.Initialize(pDevice, "media\\heightMap.raw", "media\\terrain.jpg");
 	m_terrain.ScaleTo(50.0f, 0.003f, 50.0f);
@@ -379,25 +399,29 @@ void CApplication::ProcessInput(float fElapsedTime)
 	if(m_input.CheckKeyPressed(DIK_W)) //W key
 	{
 		//m_camera.Pitch(-0.5f * fElapsedTime);
-		m_meshPerson.TranslateBy(0.0f, 0.0f, 0.5f * fElapsedTime);
+		m_meshPerson.GoForward(0.5f * fElapsedTime);
+		//m_meshPerson.TranslateBy(0.0f, 0.0f, 0.5f * fElapsedTime);
 	}
 
 	if(m_input.CheckKeyPressed(DIK_S)) //S key
 	{
 		//m_camera.Pitch(0.5f * fElapsedTime);
-		m_meshPerson.TranslateBy(0.0f, 0.0f, -0.5f * fElapsedTime);
+		m_meshPerson.GoForward(-0.5f * fElapsedTime);
+		//m_meshPerson.TranslateBy(0.0f, 0.0f, -0.5f * fElapsedTime);
 	}
 
 	if(m_input.CheckKeyPressed(DIK_A)) //A key
 	{
 		//m_camera.Yaw(-0.5f * fElapsedTime);
-		m_meshPerson.TranslateBy(-0.5f * fElapsedTime, 0.0f, 0.0f);
+		m_meshPerson.GoRight(-0.5f * fElapsedTime);
+		//m_meshPerson.TranslateBy(-0.5f * fElapsedTime, 0.0f, 0.0f);
 	}
 
 	if(m_input.CheckKeyPressed(DIK_D)) //D key
 	{
 		//m_camera.Yaw(0.5f * fElapsedTime);
-		m_meshPerson.TranslateBy(0.5f * fElapsedTime, 0.0f, 0.0f);
+		m_meshPerson.GoRight(0.5f * fElapsedTime);
+		//m_meshPerson.TranslateBy(0.5f * fElapsedTime, 0.0f, 0.0f);
 
 	}
 }
