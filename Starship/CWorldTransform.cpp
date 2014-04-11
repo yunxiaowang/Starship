@@ -176,5 +176,8 @@ void CWorldTransform::SetParent(CWorldTransform * pParent)
 
 D3DXVECTOR3 CWorldTransform::GetPosition()
 {
-	return D3DXVECTOR3(m_translate._41, m_translate._42, m_translate._43);
+	D3DXVECTOR3 vecPos = D3DXVECTOR3(m_translate._41, m_translate._42, m_translate._43);
+	if(m_pParent)
+		vecPos += m_pParent->GetPosition();
+	return vecPos;
 }

@@ -48,6 +48,8 @@ void CControlObject::Pitch(float fAngle)
 {
 	D3DXMATRIX mat;
 	D3DXMatrixRotationAxis(&mat, &m_vecRight,	fAngle);
+	m_rotate = m_rotate * mat;
+
 
 	// rotate up and look vector
 	D3DXVec3TransformCoord(&m_vecUp,&m_vecUp, &mat);
@@ -62,6 +64,9 @@ void CControlObject::Yaw(float fAngle)
 	D3DXMATRIX mat;
 
 	D3DXMatrixRotationAxis(&mat, &m_vecUp, fAngle);
+	m_rotate = m_rotate * mat;
+
+
 	// rotate right and look vector
 	D3DXVec3TransformCoord(&m_vecRight,&m_vecRight, &mat);
 	D3DXVec3TransformCoord(&m_vecLook,&m_vecLook, &mat);
@@ -73,7 +78,9 @@ void CControlObject::Yaw(float fAngle)
 void CControlObject::Roll(float fAngle)
 {
 	D3DXMATRIX mat;
+	//D3DXMatrixRotationAxis(&mat, &m_vecLook, fAngle);
 	D3DXMatrixRotationAxis(&mat, &m_vecLook, fAngle);
+	m_rotate = m_rotate * mat;
 
 	// rotate up and right vector
 	D3DXVec3TransformCoord(&m_vecRight,&m_vecRight, &mat);
@@ -94,19 +101,22 @@ D3DMATRIX CControlObject::getViewMatrix(D3DXMATRIX * pmatView)
 	D3DXVec3Cross(&m_vecRight, &m_vecUp, &m_vecLook);
 	D3DXVec3Normalize(&m_vecRight, &m_vecRight);
 
-	D3DXVECTOR3 matWorldPos = m_vecPos + m_pParent->GetPosition();
+	//D3DXVECTOR3 matWorldPos = this->GetPosition();
 
-	//float x = -D3DXVec3Dot(&m_vecRight, &m_vecPos);
-	//float y = -D3DXVec3Dot(&m_vecUp, &m_vecPos);
-	//float z = -D3DXVec3Dot(&m_vecLook, &m_vecPos);
-	float x = -D3DXVec3Dot(&m_vecRight, &matWorldPos);
-	float y = -D3DXVec3Dot(&m_vecUp, &matWorldPos);
-	float z = -D3DXVec3Dot(&m_vecLook, &matWorldPos);
+	////float x = -D3DXVec3Dot(&m_vecRight, &m_vecPos);
+	////float y = -D3DXVec3Dot(&m_vecUp, &m_vecPos);
+	////float z = -D3DXVec3Dot(&m_vecLook, &m_vecPos);
+	//float x = -D3DXVec3Dot(&m_vecRight, &matWorldPos);
+	//float y = -D3DXVec3Dot(&m_vecUp, &matWorldPos);
+	//float z = -D3DXVec3Dot(&m_vecLook, &matWorldPos);
 
-	matView(0,0) = m_vecRight.x; matView(0, 1) = m_vecUp.x; matView(0, 2) = m_vecLook.x; matView(0, 3) = 0.0f;
-	matView(1,0) = m_vecRight.y; matView(1, 1) = m_vecUp.y; matView(1, 2) = m_vecLook.y; matView(1, 3) = 0.0f;
-	matView(2,0) = m_vecRight.z; matView(2, 1) = m_vecUp.z; matView(2, 2) = m_vecLook.z; matView(2, 3) = 0.0f;
-	matView(3,0) = x;        matView(3, 1) = y;     matView(3, 2) = z; matView(3, 3) = 1.0f; 
+	//matView(0,0) = m_vecRight.x; matView(0, 1) = m_vecUp.x; matView(0, 2) = m_vecLook.x; matView(0, 3) = 0.0f;
+	//matView(1,0) = m_vecRight.y; matView(1, 1) = m_vecUp.y; matView(1, 2) = m_vecLook.y; matView(1, 3) = 0.0f;
+	//matView(2,0) = m_vecRight.z; matView(2, 1) = m_vecUp.z; matView(2, 2) = m_vecLook.z; matView(2, 3) = 0.0f;
+	//matView(3,0) = x;        matView(3, 1) = y;     matView(3, 2) = z; matView(3, 3) = 1.0f; 
+
+	D3DXMATRIX matWorld = GetTransform();
+	D3DXMatrixInverse(&matView, 0, &matWorld);
 
 	if(pmatView)
 		* pmatView = matView;
@@ -114,17 +124,17 @@ D3DMATRIX CControlObject::getViewMatrix(D3DXMATRIX * pmatView)
 	return matView;
 }
 
-D3DXVECTOR3 CControlObject::getPosition(D3DXVECTOR3 * pvecPos)
-{
-	D3DXVECTOR3 worldPos = m_vecPos;
-	if(m_pParent)
-		worldPos += m_pParent->GetPosition();
-
-	if(pvecPos)
-		* pvecPos = worldPos;
-
-	return worldPos;
-}
+//D3DXVECTOR3 CControlObject::getPosition(D3DXVECTOR3 * pvecPos)
+//{
+//	D3DXVECTOR3 worldPos = m_vecPos;
+//	if(m_pParent)
+//		worldPos += m_pParent->GetPosition();
+//
+//	if(pvecPos)
+//		* pvecPos = worldPos;
+//
+//	return worldPos;
+//}
 
 void CControlObject::setPosition(const D3DXVECTOR3 * const pvecPos)
 {

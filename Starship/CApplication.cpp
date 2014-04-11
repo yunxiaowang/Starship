@@ -313,7 +313,7 @@ void CApplication::UpdateFrame()
 	matView = m_camera.getViewMatrix();
 	m_pDevice->SetTransform(D3DTS_VIEW, &matView);
 	
-	matCameraPos = m_camera.getPosition();
+	matCameraPos = m_camera.GetPosition();
 	m_skybox.TranslateTo(matCameraPos.x, matCameraPos.y, matCameraPos.z);
 	m_skybox.Update(fElapsedTime);
 
@@ -364,6 +364,13 @@ void CApplication::ProcessInput(float fElapsedTime)
 		LONG Dy = m_input.GetYDiff();
 		m_camera.Yaw(-Dx * 0.01f);
 		m_camera.Pitch(-Dy * 0.01f);
+	}
+	else
+	{
+		LONG Dx = m_input.GetXDiff();
+		LONG Dy = m_input.GetYDiff();
+		m_camera.Yaw(Dx * 0.01f);
+		m_camera.Pitch(Dy * 0.001f);
 	}
 
 	if(m_input.CheckKeyPressed(DIK_UP)) //up key

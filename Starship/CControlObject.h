@@ -23,7 +23,7 @@ public:
 
 	D3DMATRIX getViewMatrix(D3DXMATRIX * pmatView = NULL);
 
-	D3DXVECTOR3 getPosition(D3DXVECTOR3 * pvecPos = NULL);
+	//D3DXVECTOR3 getPosition(D3DXVECTOR3 * pvecPos = NULL);
 	void setPosition(const D3DXVECTOR3 * const pvecPos);
 
 	D3DXVECTOR3 getRight(D3DXVECTOR3 * pvecRight = NULL);
